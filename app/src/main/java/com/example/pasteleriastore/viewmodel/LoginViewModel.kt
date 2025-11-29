@@ -14,7 +14,13 @@ class LoginViewModel (application: Application): AndroidViewModel(application) {
         val usuarioEncontrado = usuarioDao.login(nombre, contrasena)
         return usuarioEncontrado != null
     }
-    suspend fun registroUsuario(usuario: Usuario){
-        usuarioDao.insertar(usuario)
+    suspend fun registroUsuario(usuario: Usuario): Boolean{
+        return try {
+            val id = usuarioDao.insertar(usuario)
+            id > 0
+        } catch (e: Exception){
+            false
+        }
+
     }
 }

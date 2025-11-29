@@ -1,5 +1,6 @@
 package com.example.pasteleriastore.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,10 +24,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.Image
+import androidx.glance.LocalContext
 import androidx.glance.text.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pasteleriastore.R
+import com.example.pasteleriastore.model.Usuario
 import com.example.pasteleriastore.ui.components.BotonPastel
 import com.example.pasteleriastore.ui.components.CampoTexto
 import com.example.pasteleriastore.ui.components.TituloText
@@ -44,7 +47,7 @@ fun LoginScreen(navController: NavController){
     var mensaje by remember { mutableStateOf("") }
 
     val viewModel: LoginViewModel = viewModel()
-
+    val context = LocalContext.current
 
 
     Box(
@@ -123,7 +126,23 @@ fun LoginScreen(navController: NavController){
             BotonPastel(
                 "Dulce Registro",
                 onClickAccion = {
-                    navController.navigate("registro")
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val nombre = ""
+                        val correo = ""
+                        val nuevoUsuario = Usuario(nombre = nombre, correo = correo, contrasena = contrasena)
+                        val registroUsuario = viewModel.registroUsuario(nuevoUsuario)
+
+                        withContext(Dispatchers.Main){
+                            if (registroUsuario){
+                                Toast.makeText(context,"Registro Existoso", Toast.LENGTH_SHORT).show()
+                                navController.navigate("login")
+                            }else{
+                                Toast.makeText(context, "Error al Registrar Usuario", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                    }
+                    //navController.navigate("registro")
                 }
             )
         }

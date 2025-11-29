@@ -11,7 +11,7 @@ import com.example.pasteleriastore.model.Usuario
 @Dao
 interface UsuarioDao {
     @Insert
-    suspend fun insertar(usuario: Usuario)
+    suspend fun insertar(usuario: Usuario): Long
 
     @Update
     suspend fun actualizar(usuario: Usuario)

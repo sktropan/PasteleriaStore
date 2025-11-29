@@ -1,0 +1,43 @@
+package com.example.pasteleriastore.ui.screen
+
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.pasteleriastore.R
+import kotlinx.coroutines.delay
+
+@Composable
+fun SplashScreen(navController: NavController){
+    LaunchedEffect(Unit) {
+        delay(3000)
+        navController.navigate("login"){
+            popUpTo("splash") { inclusive = true}
+        }
+    }
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+
+    ){
+        Image(
+            painter = painterResource(id = R.drawable.logoc),
+            contentDescription = "Logo Pasteleria circular",
+           modifier = Modifier.size(300.dp)
+
+        )
+    }
+}
